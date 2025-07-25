@@ -34,6 +34,8 @@ public class PedidoService {
     @Autowired
     private VentaService ventaService;
 
+    public Optional<Pedido> getEntity(Long id){return pedidoRepository.findById(id);}
+
     public PedidoDTO crearPedido(PedidoRequestDTO pedidoRequest) {
 
         VentaDTO ventaCreadaDTO = ventaService.crearVenta(pedidoRequest.venta());
@@ -47,7 +49,7 @@ public class PedidoService {
         nuevoPedido.setNombreCliente(pedidoRequest.nombreCliente());
         nuevoPedido.setDireccion(pedidoRequest.direccion());
         nuevoPedido.setVenta(ventaGuardada);
-        nuevoPedido.setEstado("pendiente");
+        nuevoPedido.setEstado(Pedido.Estado.PENDIENTE);
         nuevoPedido.setActivo(true);
 
         Pedido pedidoGuardado = pedidoRepository.save(nuevoPedido);
@@ -85,7 +87,7 @@ public class PedidoService {
                 ventaAsociada.getId(),
                 pedido.getDireccion(),
                 pedido.getNombreCliente(),
-                pedido.getEstado(),
+                pedido.getEstado().getDescripcion(),
                 pedido.isActivo(),
                 detallesDTO
         );
@@ -103,5 +105,15 @@ public class PedidoService {
             throw new Exception("Ya se encuentra inactivo");
         }
     }
+
+    public PedidoDTO actualizarEstado(Long id) {
+        Pedido pedido = pedidoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("No se encontró el pedido con el ID: " + id));
+        pedido.setEstado(pedido.getEstado().siguiente());
+        Pedido pedidoGuardado = pedidoRepository.save(pedido);
+        return convertirEntidadADTO(pedidoGuardado);
+    }
+
+
 }
 

@@ -2,8 +2,10 @@ package com.blanquita.blanquitagestion.service;
 
 import com.blanquita.blanquitagestion.dao.ProductoRepository;
 import com.blanquita.blanquitagestion.entity.Producto;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -65,6 +67,15 @@ public class ProductoService {
             return productoRepository.save(nuevoProducto);
         }
 
+    }
+
+    public Producto actualizarStock(Long id){
+        Producto producto = productoRepository.findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException("Producto no encontrado"));
+
+        producto.setEn_stock(!producto.isEn_stock());
+
+        return productoRepository.save(producto);
     }
 
 }

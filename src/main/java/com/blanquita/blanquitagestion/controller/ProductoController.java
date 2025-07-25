@@ -2,6 +2,7 @@ package com.blanquita.blanquitagestion.controller;
 
 import com.blanquita.blanquitagestion.entity.Producto;
 import com.blanquita.blanquitagestion.service.ProductoService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,16 @@ public class ProductoController {
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+        }
+    }
+
+    @PatchMapping("/{id}/stock")
+    public ResponseEntity<?> cambiarStock(@PathVariable Long id) {
+        try {
+            Producto productoActualizado = productoService.actualizarStock(id);
+            return ResponseEntity.ok(productoActualizado);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 }

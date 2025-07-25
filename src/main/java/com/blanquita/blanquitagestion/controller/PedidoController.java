@@ -4,6 +4,7 @@ import com.blanquita.blanquitagestion.dto.PedidoDTO;
 import com.blanquita.blanquitagestion.dto.PedidoRequestDTO;
 import com.blanquita.blanquitagestion.entity.Pedido;
 import com.blanquita.blanquitagestion.service.PedidoService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -42,5 +44,20 @@ public class PedidoController {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
         }
     }
+
+    @PatchMapping("/{id}/estado")
+    public ResponseEntity<?> cambiarEstado(@PathVariable Long id) {
+        try {
+            PedidoDTO pedidoActualizado = pedidoService.actualizarEstado(id);
+            return ResponseEntity.ok(pedidoActualizado);
+        } catch (EntityNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalStateException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+    //Esta forma de devolver errores es interesante.
+    //Puedo usarla en un futuro para evitar tener que desarmar el mensaje de error en el front.
+    //Tener en cuenta para un posible refactor
 }
 

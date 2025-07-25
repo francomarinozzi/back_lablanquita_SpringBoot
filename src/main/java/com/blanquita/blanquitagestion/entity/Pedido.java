@@ -26,9 +26,39 @@ public class Pedido {
     @Column(name="nombre_cliente", nullable=true) //El nombre de los clientes que realizan pedidos para delivery a veces no se sabe;
     private String nombreCliente;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="estado")
-    private String estado; // Puede ser Completado, pendiente o en proceso;
+    private Estado estado; // Puede ser Completado, pendiente o en proceso;
 
     @Column(name="activo")
     private boolean activo;
+
+    public enum Estado {
+        PENDIENTE("Pendiente"),
+        EN_PROCESO("En proceso"),
+        COMPLETADO("Completado");
+
+        private final String descripcion;
+
+        Estado(String descripcion) {
+            this.descripcion = descripcion;
+        }
+
+        public String getDescripcion() {
+            return descripcion;
+        }
+
+        public Estado siguiente() {
+            switch (this) {
+                case PENDIENTE:
+                    return EN_PROCESO;
+                case EN_PROCESO:
+                    return COMPLETADO;
+                case COMPLETADO:
+                    throw new IllegalStateException("El pedido ya está completo");
+                default:
+                    throw new IllegalArgumentException("Estado desconocido");
+            }
+        }
+    }
 }
