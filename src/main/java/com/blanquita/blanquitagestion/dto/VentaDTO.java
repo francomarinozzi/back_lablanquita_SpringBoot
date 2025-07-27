@@ -12,5 +12,6 @@ public record VentaDTO(
         LocalDateTime fechaHora,
         String formaPago,
         BigDecimal total,
+        boolean activo,
         List<DetalleVentaDTO> detalles
 ) {}

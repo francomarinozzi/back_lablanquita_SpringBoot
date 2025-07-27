@@ -93,6 +93,7 @@ public class VentaService {
                 venta.getFechaHora(),
                 venta.getFormaPago(),
                 venta.getTotal(),
+                venta.isActivo(),
                 detallesDTO
         );
     }
