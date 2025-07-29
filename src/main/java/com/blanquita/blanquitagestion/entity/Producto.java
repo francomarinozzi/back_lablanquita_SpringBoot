@@ -2,6 +2,7 @@ package com.blanquita.blanquitagestion.entity;
 
 import jakarta.persistence.*;
 
+import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Producto {
     private String nombre;
 
     @NotNull
+    @DecimalMin(value = "0.0", inclusive = false, message = "El precio debe ser mayor que 0")
     @Column(name = "precio")
     private BigDecimal precio;
 
