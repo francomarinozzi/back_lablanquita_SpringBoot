@@ -1,6 +1,6 @@
 # 🍝 La Blanquita - Sistema de Gestión
 
-> Backend de un sistema de gestión para una fábrica de pastas, desarrollado con Spring Boot. Este proyecto permite administrar productos, ventas y pedidos de manera eficiente.
+> Backend de un sistema de gestión para una fábrica de pastas, desarrollado con Spring Boot. Este proyecto permite administrar productos, ventas y pedidos.
 
 ---
 
@@ -43,8 +43,8 @@
 
 1.  **Clonar el repositorio:**
     ```bash
-    git clone [https://github.com/francomarinozzi/api_lablanquita_springboot.git](https://github.com/francomarinozzi/api_lablanquita_springboot.git)
-    cd api_lablanquita_springboot
+    git clone https://github.com/francomarinozzi/back_lablanquita_SpringBoot
+    cd back_lablanquita_springboot
     ```
 
 2.  **Configurar la Base de Datos:**
@@ -56,30 +56,9 @@
         ```bash
         ./mvnw spring-boot:run
         ```
+        Desde IntelliJ IDEA, se puede ejecutar directamente haciendo click en maven -> blanquita-gestion -> plugins -> spring-boot -> spring-boot:run
     -   La API estará disponible en `http://localhost:8080`.
 
 ---
 
-## 🔌 Endpoints de la API
-
-### Productos
-
--   `POST /api/productos`: Crea un nuevo producto.
--   `GET /api/productos`: Obtiene la lista de todos los productos.
--   `GET /api/productos/{id}`: Obtiene un producto por su ID.
--   `PUT /api/productos/{id}`: Actualiza la información de un producto existente.
--   `PATCH /api/productos/{id}/baja`: Realiza una baja lógica del producto.
-
-### Ventas
-
--   `POST /api/ventas`: Crea una nueva venta.
--   `GET /api/ventas`: Obtiene el historial de todas las ventas.
--   `GET /api/ventas/{id}`: Obtiene una venta específica por su ID.
--   `PATCH /api/ventas/{id}/baja`: Realiza una baja lógica de la venta.
-
-### Pedidos
-
--   `POST /api/pedidos`: Crea un nuevo pedido.
--   `GET /api/pedidos`: Obtiene la lista de todos los pedidos.
--   `GET /api/pedidos/{id}`: Obtiene un pedido por su ID.
--   `PATCH /api/pedidos/{id}/baja`: Realiza una baja lógica del pedido.
+## 🔌 Endpoints de la API documentados en Swagger. Acceder desde http://localhost:8080/swagger-ui.html
