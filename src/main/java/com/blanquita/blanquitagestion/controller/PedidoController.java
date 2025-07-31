@@ -5,12 +5,18 @@ import com.blanquita.blanquitagestion.dto.PedidoRequestDTO;
 import com.blanquita.blanquitagestion.entity.Pedido;
 import com.blanquita.blanquitagestion.service.PedidoService;
 import jakarta.persistence.EntityNotFoundException;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -59,5 +65,17 @@ public class PedidoController {
     //Esta forma de devolver errores es interesante.
     //Puedo usarla en un futuro para evitar tener que desarmar el mensaje de error en el front.
     //Tener en cuenta para un posible refactor
+
+
+    @GetMapping("/filter") //Solo devuelve pedidos activos, y utiliza filtros
+    public Page<PedidoDTO> getFilteredPedidos(
+            @RequestParam(required = false) Long id,
+            @RequestParam(required = false) String nombreCliente,
+            @RequestParam(required = false) Pedido.Estado estado,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fecha,
+            Pageable pageable) {
+        return pedidoService.findPedidos(id, nombreCliente, estado, fecha, pageable);
+    }
+
 }
 
