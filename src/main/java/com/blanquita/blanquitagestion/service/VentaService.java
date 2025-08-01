@@ -3,16 +3,24 @@ package com.blanquita.blanquitagestion.service;
 import com.blanquita.blanquitagestion.dao.ProductoRepository;
 import com.blanquita.blanquitagestion.dao.VentaRepository;
 import com.blanquita.blanquitagestion.dto.DetalleVentaDTO;
+import com.blanquita.blanquitagestion.dto.PedidoDTO;
 import com.blanquita.blanquitagestion.dto.VentaDTO;
 import com.blanquita.blanquitagestion.entity.DetalleVenta;
+import com.blanquita.blanquitagestion.entity.Pedido;
 import com.blanquita.blanquitagestion.entity.Producto;
 import com.blanquita.blanquitagestion.entity.Venta;
+import com.blanquita.blanquitagestion.service.spec.PedidoSpecification;
+import com.blanquita.blanquitagestion.service.spec.VentaSpecification;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -97,5 +105,12 @@ public class VentaService {
                 detallesDTO
         );
     }
+
+    public Page<VentaDTO> findVentas(Long id, LocalDate fecha, Pageable pageable) {
+        Specification<Venta> spec = VentaSpecification.withFilters(id, fecha);
+        Page<Venta> ventas = ventaRepository.findAll(spec, pageable);
+        return ventas.map(this::convertirEntidadADTO);
+    }
+
 
 }

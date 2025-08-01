@@ -24,7 +24,6 @@ public class PedidoSpecification {
                 predicates.add(criteriaBuilder.equal(root.get("estado"), estado));
             }
             if (fecha != null) {
-
                 predicates.add(criteriaBuilder.between(root.get("venta").get("fechaHora"), fecha.atStartOfDay(), fecha.plusDays(1).atStartOfDay()));
             }
 

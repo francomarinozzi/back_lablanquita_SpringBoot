@@ -25,13 +25,13 @@ public class Pedido {
 
     @Column(name="nombre_cliente", nullable=true) //El nombre de los clientes que realizan pedidos para delivery a veces no se sabe;
     private String nombreCliente;
+    
+    @Column(name="activo")
+    private boolean activo;
 
     @Enumerated(EnumType.STRING)
     @Column(name="estado")
     private Estado estado; // Puede ser Completado, pendiente o en proceso;
-
-    @Column(name="activo")
-    private boolean activo;
 
     public enum Estado {
         PENDIENTE("Pendiente"),

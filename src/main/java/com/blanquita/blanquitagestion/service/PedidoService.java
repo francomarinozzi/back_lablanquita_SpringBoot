@@ -102,6 +102,7 @@ public class PedidoService {
                 pedido.getEstado().getDescripcion(),
                 pedido.isActivo(),
                 ventaAsociada.getFechaHora(),
+                ventaAsociada.getTotal(),
                 detallesDTO
         );
     }
