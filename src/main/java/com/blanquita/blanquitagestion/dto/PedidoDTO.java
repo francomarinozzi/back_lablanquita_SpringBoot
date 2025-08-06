@@ -10,6 +10,7 @@ public record PedidoDTO (
     String nombreCliente,
     String estado,
     boolean activo,
+    String comentarios,
     LocalDateTime fechaHora,
     List<DetalleVentaDTO> detalles
 ){}

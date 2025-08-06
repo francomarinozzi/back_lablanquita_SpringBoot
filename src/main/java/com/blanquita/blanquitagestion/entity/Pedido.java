@@ -33,6 +33,9 @@ public class Pedido {
     @Column(name="activo")
     private boolean activo;
 
+    @Column(name="comentarios", nullable = true)
+    private String comentarios;
+
     public enum Estado {
         PENDIENTE("Pendiente"),
         EN_PROCESO("En proceso"),
