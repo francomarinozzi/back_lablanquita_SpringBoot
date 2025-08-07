@@ -51,7 +51,7 @@ public class PedidoService {
         nuevoPedido.setVenta(ventaGuardada);
         nuevoPedido.setEstado(Pedido.Estado.PENDIENTE);
         nuevoPedido.setActivo(true);
-
+        nuevoPedido.setComentarios(pedidoRequest.comentarios());
         Pedido pedidoGuardado = pedidoRepository.save(nuevoPedido);
 
         return convertirEntidadADTO(pedidoGuardado);
